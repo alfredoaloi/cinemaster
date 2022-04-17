@@ -1,0 +1,38 @@
+<div class="header">
+  <h5>Lista {{type}}</h5>
+</div>
+<div *ngIf="!loaded" class="spinner">
+  <div class="spinner-border"></div>
+</div>
+<div class="control-section" *ngIf="loaded">
+  <ejs-grid  #grid [dataSource]='data' [editSettings]='editSettings' (actionBegin)="actionBegin($event)">
+    <e-columns>
+      <e-column field='id' headerText='ID' width='20' textAlign='Right' isPrimaryKey="true" allowEditing="false"></e-column>
+      <e-column field='name' headerText='Nome' width='160' textAlign='Center' [validationRules]='nameRules'></e-column>
+      <e-column headerText='Modifica' width='160' [commands]='commands'></e-column>
+    </e-columns>
+  </ejs-grid>
+</div>
+<ejs-toast cssClass="e-toast-danger" #invalidResponseToastAlert [position]='position'>
+  <ng-template #title>
+    <div>Errore!</div>
+  </ng-template>
+  <ng-template #content>
+    <div>E' stato riscontrato un errore... Riprova per favore!</div>
+  </ng-template>
+</ejs-toast>
+
+<ejs-toast cssClass="e-toast-success" #correctResponseToastAlert [position]='position'>
+  <ng-template #title>
+    <div>Ottimo!</div>
+  </ng-template>
+  <ng-template #content>
+    <div>Elemento modificato correttamente</div>
+  </ng-template>
+</ejs-toast>
+
+<ejs-toast cssClass="e-toast-success" #correctDeleteToastAlert [position]='position'>
+  <ng-template #content>
+    <div>Elemento eliminato correttamente</div>
+  </ng-template>
+</ejs-toast>

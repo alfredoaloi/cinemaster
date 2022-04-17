@@ -1,0 +1,78 @@
+<div id="shows-list-spinner" *ngIf="!loaded" style="text-align: center; margin-top: 5%; color: #ff914d;">
+  <div class="spinner-border"></div>
+</div>
+
+<ejs-tab *ngIf="loaded" id="shows-list-container" xmlns="http://www.w3.org/1999/html">
+  <e-tabitems>
+    <e-tabitem>
+      <ng-template #headerText>
+        <div>
+          Spettacoli in sala
+        </div>
+      </ng-template>
+      <ng-template #content>
+        <div class="shows-slider">
+          <h4 class="slider-title"> Lista degli spettacoli attualmente in sala</h4>
+          <ngx-slick-carousel class="carousel"
+                              #slickModal="slick-carousel"
+                              [config]="actionSliderConfig">
+            <div ngxSlickItem *ngFor="let slide of availableSliderShows" class="slide">
+              <div class="carousel-thumb">
+                <a href="/show/{{slide.id}}"><img src="{{ slide.photoUrl }}" alt="" width="100%"></a>
+              </div>
+              <div class="carousel-content">
+                <h2 class="carousel-title">
+                  <a href="/show/{{slide.id}}" tabindex="0">{{slide.name}}</a>
+                </h2>
+                <div class="carousel-release">Trasmesso il :<span>{{slide.releaseDate}}</span>
+                </div>
+                <div class="carousel-button">
+                  <a href="/show/{{slide.id}}" tabindex="0">
+                    <i aria-hidden="true" class="fa fa-ticket"></i>Compra</a>
+                  <a href="/show/{{slide.id}}" tabindex="0">
+                    <i aria-hidden="true" class="fa fa-exclamation">
+                    </i>Dettagli
+                  </a>
+                </div>
+              </div>
+            </div>
+          </ngx-slick-carousel>
+        </div>
+      </ng-template>
+    </e-tabitem>
+    <e-tabitem>
+      <ng-template #headerText>
+        <div>
+          Spettacoli in arrivo
+        </div>
+      </ng-template>
+      <ng-template #content>
+        <div class="shows-slider">
+          <h4 class="slider-title"> Lista degli spettacoli disponibili a breve</h4>
+          <ngx-slick-carousel class="carousel"
+                              #slickModal="slick-carousel"
+                              [config]="actionSliderConfig">
+            <div ngxSlickItem *ngFor="let slide of comingSoonSliderShows" class="slide">
+              <div class="carousel-thumb">
+                <a href="/show/{{slide.id}}"><img src="{{ slide.photoUrl }}" alt="" width="100%"></a>
+              </div>
+              <div class="carousel-content">
+                <h2 class="carousel-title">
+                  <a href="/show/{{slide.id}}" tabindex="0">{{slide.name}}</a>
+                </h2>
+                <div class="carousel-release">Uscito il :<span>{{slide.releaseDate}}</span>
+                </div>
+                <div class="carousel-button">
+                  <a href="/show/{{slide.id}}" tabindex="0">
+                    <i aria-hidden="true" class="fa fa-exclamation">
+                    </i>Dettagli
+                  </a>
+                </div>
+              </div>
+            </div>
+          </ngx-slick-carousel>
+        </div>
+      </ng-template>
+    </e-tabitem>
+  </e-tabitems>
+</ejs-tab>

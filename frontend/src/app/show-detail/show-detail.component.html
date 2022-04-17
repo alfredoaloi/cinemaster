@@ -1,0 +1,119 @@
+<app-navbar></app-navbar>
+<div *ngIf="!showLoaded" class="spinner">
+  <div class="spinner-border"></div>
+</div>
+<div id="content" class="site-content" *ngIf="showLoaded">
+
+  <section class="main-content single-movie layout-full no-banner">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="page-content">
+
+            <article id="post-88" class="">
+              <div class="row amy-single-movie">
+                <div class="col-md-4 col-sm-4">
+                  <div class="entry-thumb">
+                    <img width="360" height="618"
+                         src="{{show.photoUrl}}"
+                         class="attachment-360x618 size-360x618" alt=""
+                         sizes="(max-width: 360px) 100vw, 360px"></div>
+                </div>
+                <div class="col-md-8 col-sm-8">
+                  <div class="entry-info">
+
+                    <h1 class="entry-title p-name" itemprop="name headline"><a
+                      rel="bookmark">{{this.show.name}}</a></h1>
+                    <div class="entry-pg">
+
+                      <span class="duration"><i class="fa fa-clock-o"></i>{{show.length}}</span></div>
+
+                    <ul class="info-list">
+                      <li>
+                        <label>Attori:</label>
+                        <span style="color: #fe7900" class="elements">{{show.actors}}</span>
+                      </li>
+
+                      <li>
+                        <label>Registi:</label>
+                        <span style="color: #fe7900" class="elements">{{show.directors}}</span>
+                      </li>
+
+                      <li>
+                        <label>Generi:</label>
+                        <span style="color: #fe7900" class="elements">{{show.categories}}</span>
+                      </li>
+
+                      <li>
+                        <label>Uscita:</label>
+                        <span style="color: #fe7900" class="elements">{{show.releaseDate}}</span>
+                      </li>
+
+                      <li>
+                        <label>Lingua:</label>
+                        <span style="color: #fe7900" class="elements">{{show.language}} </span>
+                      </li>
+                      <li>
+                        <label>Produzione:</label>
+                        <span style="color: #fe7900" class="elements">{{show.productionLocation}} </span>
+                      </li>
+                    </ul>
+                  </div>
+
+                  <div class="entry-content e-content article-body" itemprop="description articleBody">
+                    <h3 class="info-name amy-title">Descrizione</h3>
+                    <p>{{show.description}}</p>
+                  </div>
+                </div>
+              </div>
+
+
+              <div class="entry-showtime single-cinema" *ngIf="eventsLoaded" [hidden]="seatReservationCompleted">
+                <div class="clearfix">
+                  <h3 class="info-name amy-title">Programmazione</h3>
+                </div>
+                <div class="showtime">
+                  <div class="showtime-item">
+                    <div *ngFor="let date of getKeys(uniqueHours)" class="st-item">
+                      <div class="st-title"><label>{{date}}</label></div>
+                      <ul>
+                        <li style="cursor: pointer" *ngFor="let hour of uniqueHours.get(date)" (click)="renderSeatPlan(date, hour)">
+                          {{hour}}</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="entry-map single-cinema" [hidden]="seatReservationCompleted">
+                <app-seat-reservation #seatReservationComponent></app-seat-reservation>
+              </div>
+              <div class="entry-map single-cinema container-fluid" *ngIf="wantsToBuy">
+                <br>
+                <h3 class="info-name amy-title">Riepilogo prenotazione</h3>
+                <h3>{{show.name}} - {{seatReservation.date}} - {{seatReservation.hour}} </h3>
+                <div *ngFor="let e of seatReservation.plants">
+                  <h4>Costo biglietti {{e.name}}</h4>
+                  <h6>&nbsp;&nbsp;&nbsp;&nbsp; Poltrona Standard: {{e.price.standardPrice}} €</h6>
+                  <h6>&nbsp;&nbsp;&nbsp;&nbsp; Poltrona Premium: {{e.price.premiumPrice}} €</h6>
+                  <h6>&nbsp;&nbsp;&nbsp;&nbsp; Poltrona VIP: {{e.price.vipPrice}} €</h6>
+                </div>
+
+                <h4>Posti selezionati:</h4>
+                <h6 *ngFor="let s of seatReservation.seatSelected()">&nbsp;&nbsp;&nbsp;&nbsp; {{s}}</h6>
+                <h4>Totale:</h4>
+                <h6>&nbsp;&nbsp;&nbsp;&nbsp; {{totalAmount}} €</h6>
+                <div>
+                  <app-paypal-payment-executor #paypalPaymentExecutorComponent (totalPriceChanged)="priceToPayChanged($event)" (bookingCompletedEmitter)="setSeatReservationCompleted($event)" [eventsBookingTotalPrice]="totalAmount" [eventsBookingDetails]="this.seatReservation.getReservedSeatByEvent()"></app-paypal-payment-executor>
+                </div>
+              </div>
+            </article>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+<app-footer></app-footer>
+
+

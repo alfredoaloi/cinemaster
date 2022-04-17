@@ -1,0 +1,78 @@
+footer::after {
+  /*content: "";
+  background-image: url("src/assets/pubblico_cinema.jpg");
+  background-color: #434a52;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  opacity: 0.85;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  top: 0;
+  position: absolute;
+  z-index: -1;*/
+
+}
+
+footer {
+  margin-top: 15px;
+  display: block;
+  position: relative;
+  background-color: #434a52;
+  padding-top: 3%;
+}
+
+h3, .title{
+  color: #ff914d;
+}
+
+p, span {
+  color: ghostwhite;
+  font-size: 13px;
+}
+
+a {
+  text-decoration: none;
+  color: ghostwhite;
+}
+
+.btn {
+  background-color: #ff914d;
+  color: #f8f8ff;
+}
+
+input {
+  border-color: ghostwhite;
+  color: #ff914d;
+}
+
+textarea:focus, input:focus {
+  color: #ff914d;
+}
+
+::placeholder {
+  color: ghostwhite;
+  opacity: 1;
+}
+
+:-ms-input-placeholder {
+  color: ghostwhite;
+}
+
+::-ms-input-placeholder {
+  color: ghostwhite;
+}
+
+.social {
+  color: ghostwhite;
+  font-size: 25px;
+}
+
+.social:hover {
+  color: #ff914d;
+}
+.left{
+  text-align: left;
+}
+

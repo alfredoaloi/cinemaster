@@ -1,0 +1,93 @@
+<div class="header">
+  <h5 id="header" *ngIf="type === 'Add' else elseBlock">Aggiungi Sale</h5>
+  <ng-template #elseBlock><h5 id="header">Modifica Sala #{{roomId}}</h5></ng-template>
+</div>
+<div *ngIf="!loaded" class="spinner">
+  <div class="spinner-border"></div>
+</div>
+<div id="target" class="control-section default-splitter" *ngIf="loaded">
+  <div class="pane1">
+    <ejs-splitter separatorSize=3 width='100%'>
+      <e-panes>
+        <!-- options content -->
+        <e-pane size='25%'>
+          <ng-template #content>
+            <div class="content option-content">
+              <div class="content">
+                <h4>Opzioni</h4>
+                <div class="container-fluid margin5">
+                  <h6>Nome Sala</h6>
+                  <ejs-textbox placeholder="Inserisci il nome della sala" [(value)]="name"></ejs-textbox>
+                </div>
+                <div class="container-fluid margin5">
+                  <h6>Righe</h6>
+                  <ejs-numerictextbox format="#" [placeholder]="1" [(value)]="rows" min="1" (change)="renderPlant()"></ejs-numerictextbox>
+                </div>
+                <div class="container-fluid margin5">
+                  <h6>Colonne</h6>
+                  <ejs-numerictextbox format="#" [(value)]="columns" [placeholder]="1" min="1" (change)="renderPlant()"></ejs-numerictextbox>
+                </div>
+                <div class="container-fluid margin5 text-center">
+                  <button class="btn" (click)="saveRoom()">Salva</button>
+                </div>
+              </div>
+            </div>
+          </ng-template>
+        </e-pane>
+        <!-- seats content -->
+        <e-pane size='75%'>
+          <ng-template #content>
+            <div class="content">
+              <h3>Piantina</h3>
+              <div class="container">
+                  <!-- Showing a static legend bar -->
+                  <div class="legend">
+                    <span class="standard-seat" [ngClass]="actual === 'standard' ? 'actual' : ''" (click)="setActual('standard')"><i class="fa fa-square" aria-hidden="true"></i></span> STANDARD
+                    <span class="premium-seat padding-left" [ngClass]="actual === 'premium' ? 'actual' : ''" (click)="setActual('premium')"><i class="fa fa-square" aria-hidden="true"></i></span> PREMIUM
+                    <span class="vip-seat padding-left" [ngClass]="actual === 'vip' ? 'actual' : ''" (click)="setActual('vip')"><i class="fa fa-square" aria-hidden="true"></i></span> VIP
+                  </div>
+
+                  <!-- Generate the seating grid -->
+                  <div *ngFor="let row of rowLetters">
+                    <span class="seat" *ngFor="let col of columnNumber" (click)="seatClicked(row + col)"
+                          [ngSwitch]="getStatus(row + col)">
+                        <span *ngSwitchCase="'standard'" class="standard-seat"><i class="fa fa-square" aria-hidden="true"></i></span>
+                        <span *ngSwitchCase="'premium'" class="premium-seat"><i class="fa fa-square" aria-hidden="true"></i></span>
+                        <span *ngSwitchCase="'vip'" class="vip-seat"><i class="fa fa-square" aria-hidden="true"></i></span>
+                        <span *ngSwitchDefault class="no-seat"><i class="fa fa-square" aria-hidden="true"></i></span>
+                    </span>
+                  </div>
+
+                  <!-- Action buttons -->
+                  <div class="container-fluid marginTop3">
+                    <button (click)="clearSelected()" class="btn">Cancella</button>
+                  </div>
+
+                  <div class="container-fluid marginTop3 text-info text-left font15">
+                    <p>*Lascia la mappa bianca per creare una sala nxm di posti standard!</p>
+                  </div>
+              </div>
+            </div>
+          </ng-template>
+        </e-pane>
+      </e-panes>
+    </ejs-splitter>
+  </div>
+</div>
+<ejs-toast cssClass="e-toast-danger" #invalidResponseToastAlert [position]='position'>
+  <ng-template #title>
+    <div>Errore!</div>
+  </ng-template>
+  <ng-template #content>
+    <div>E' stato riscontrato un errore interno... Riprova per favore!</div>
+  </ng-template>
+</ejs-toast>
+
+<ejs-toast cssClass="e-toast-success" #correctResponseToastAlert [position]='position'>
+  <ng-template #title>
+    <div>Ottimo!</div>
+  </ng-template>
+  <ng-template #content>
+    <div>Sala salvata correttamente</div>
+  </ng-template>
+</ejs-toast>

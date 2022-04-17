@@ -1,0 +1,82 @@
+<div class="header">
+  <h5>Lista {{this.type}}</h5>
+</div>
+<div *ngIf="!loaded" style="text-align: center; margin-top: 5%; color: #ff914d;">
+  <div class="spinner-border"></div>
+</div>
+<div *ngIf="loaded" id="target" class="control-section default-splitter">
+  <div class="pane">
+    <div class="container-fluid">
+      <ejs-grid #grid [dataSource]='data' [editSettings]='editSettings' (actionBegin)="actionBegin($event)">
+        <e-columns>
+          <e-column field='id' headerText='Id' width='50' textAlign='Center' isPrimaryKey="true"></e-column>
+          <e-column field='name' headerText='Nome' width='100' textAlign='Center'></e-column>
+          <e-column field='nRows' headerText='Numero Righe' width='50' textAlign='Center'></e-column>
+          <e-column field='nColumns' headerText='Numero Colonne' width='40' textAlign='Center'></e-column>
+          <e-column headerText='Piantina' width='170' textAlign='Center'>
+            <ng-template #template let-data>
+              <button class="btn primary-color" (click)="renderPlant(data)">Visualizza Piantina</button>
+            </ng-template>
+          </e-column>
+          <e-column headerText='Modifica' width='100' [commands]='commands'></e-column>
+        </e-columns>
+      </ejs-grid>
+    </div>
+    <hr>
+    <div class="container-fluid">
+      <h5>Piantina Sala {{actualPlant}}</h5>
+      <div class="container">
+        <!-- Showing a static legend bar -->
+        <div class="legend">
+          <span class="standard-seat"><i class="fa fa-square" aria-hidden="true"></i></span> STANDARD
+          <span class="premium-seat padding-left"><i class="fa fa-square" aria-hidden="true"></i></span> PREMIUM
+          <span class="vip-seat padding-left"><i class="fa fa-square" aria-hidden="true"></i></span> VIP
+        </div>
+        <!-- Generate the seating grid -->
+        <div *ngFor="let row of rowLetters">
+            <span class="seat" *ngFor="let col of columnNumber"
+                  [ngSwitch]="getStatus(row + col)">
+                <span *ngSwitchCase="'standard'" class="standard-seat"><i class="fa fa-square" aria-hidden="true"></i></span>
+                <span *ngSwitchCase="'premium'" class="premium-seat"><i class="fa fa-square" aria-hidden="true"></i></span>
+                <span *ngSwitchCase="'vip'" class="vip-seat"><i class="fa fa-square" aria-hidden="true"></i></span>
+                <span *ngSwitchDefault class="no-seat"><i class="fa fa-square" aria-hidden="true"></i></span>
+            </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<ejs-toast cssClass="e-toast-danger" #invalidResponseToastAlert [position]='position'>
+  <ng-template #title>
+    <div>Errore!</div>
+  </ng-template>
+  <ng-template #content>
+    <div>E' stato riscontrato un errore... Riprova per favore!</div>
+  </ng-template>
+</ejs-toast>
+
+<ejs-toast cssClass="e-toast-success" #correctResponseToastAlert [position]='position'>
+  <ng-template #title>
+    <div>Ottimo!</div>
+  </ng-template>
+  <ng-template #content>
+    <div>Sala modificata correttamente</div>
+  </ng-template>
+</ejs-toast>
+
+<ejs-toast cssClass="e-toast-success" #correctDeleteToastAlert [position]='position'>
+  <ng-template #content>
+    <div>Sala eliminata correttamente</div>
+  </ng-template>
+</ejs-toast>
+
+<ejs-toast cssClass="e-toast-danger" #roomOccuped [position]='position'>
+  <ng-template #title>
+    <div>Ops!</div>
+  </ng-template>
+  <ng-template #content>
+    <div>La sala è occupata da alcuni spettacoli, aspetta he si liberi e procedi all'eliminzaione!</div>
+  </ng-template>
+</ejs-toast>
+
+

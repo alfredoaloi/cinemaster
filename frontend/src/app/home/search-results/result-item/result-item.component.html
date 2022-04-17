@@ -1,0 +1,59 @@
+<div class="amy-movie-items">
+  <div class="amy-movie-item entry-item">
+    <div class="amy-movie-item-inner">
+      <div class="amy-movie-item-front">
+        <div class="amy-movie-item-poster">
+          <a href="{{urlTrailer}}">
+            <img width="196" height="336" [src]="photoUrl" class="attachment-196x336 size-196x336" alt="" sizes="(max-width: 196px) 100vw, 196px">
+          </a>
+          <span class="amy-movie-field-imdb"><i class="fa fa-film" aria-hidden="true"></i></span>
+        </div>
+      </div>
+      <div class="amy-movie-item-back"><div class="amy-movie-item-back-inner">
+        <div class="amy-movie-item-content">
+          <h3 class="amy-movie-field-title"><a href="#">{{name}}</a></h3>
+
+          <div class="amy-movie-item-meta">
+            <span class="amy-movie-field-mpaa">{{rating}}</span>
+            <span class="amy-movie-field-duration"><i class="fa fa-clock-o"></i>{{length}} minuti</span>
+          </div>
+          <div class="amy-movie-field-desc"><p>{{description}}</p></div>
+          <div class="amy-movie-custom-field-group amy-movie-field-language">
+            <label class="amy-movie-custom-field-label">Lingua:</label>
+            <div class="amy-movie-custom-field-content">
+              {{language}}
+            </div>
+          </div>
+          <div class="amy-movie-custom-field-group amy-movie-field-release_date">
+            <label class="amy-movie-custom-field-label">Data di uscita:</label>
+            <div class="amy-movie-custom-field-content">
+              {{releaseDate}}
+            </div>
+          </div>
+          <div class="amy-movie-custom-field-group amy-movie-field-amy_genre">
+            <label class="amy-movie-custom-field-label">Generi:</label>
+            <div class="amy-movie-custom-field-content" *ngFor="let category of categories; let isLast=last">
+              {{category.name}}{{isLast ? '' : ', '}}
+            </div>
+          </div>
+          <div class="amy-movie-custom-field-group amy-movie-field-amy_actor">
+            <label class="amy-movie-custom-field-label">Attori:</label>
+            <div class="amy-movie-custom-field-content" *ngFor="let actor of actors; let isLast=last">
+              {{actor.name}}{{isLast ? '' : ', '}}
+            </div>
+          </div>
+          <div class="amy-movie-custom-field-group amy-movie-field-amy_director">
+            <label class="amy-movie-custom-field-label">Director:</label>
+            <div class="amy-movie-custom-field-content" *ngFor="let director of directors; let isLast=last">
+              {{director.name}}{{isLast ? '' : ', '}}
+            </div>
+          </div>
+        </div>
+        <div class="amy-movie-item-button">
+          <a class="amy-btn-icon-text link-detail" (click)="navigateToShowDetail();">
+            <i class="fa fa-info"></i>Detail</a>
+        </div>
+      </div></div>
+    </div>
+  </div>
+</div>

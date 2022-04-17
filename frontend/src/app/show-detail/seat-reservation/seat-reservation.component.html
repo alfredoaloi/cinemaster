@@ -1,0 +1,36 @@
+<div class="container" *ngIf="!firstLoad">
+  <main class="innerContainer" *ngFor="let plant of plants; index as i">
+    <div class="movie">
+      <h3 class="movieTitle">{{movieTitle}}</h3>
+      <div class="movieDetails">{{date}} - {{hour}} - {{plant.name}}</div>
+    </div>
+
+    <div *ngIf="!loaded" style="text-align: center; margin-top: 5%; color: #ff914d">
+      <div class="spinner-border text-primary"></div>
+    </div>
+    <div *ngIf="loaded">
+
+      <div class="legend">
+        <span class="standardSeat"><i class="fa fa-square" aria-hidden="true"></i></span> STANDARD
+        <span class="premiumSeat padding-left"><i class="fa fa-square" aria-hidden="true"></i></span> PREMIUM
+        <span class="vipSeat padding-left"><i class="fa fa-square" aria-hidden="true"></i></span> VIP
+        <span class="reservedSeat padding-left"><i class="fa fa-square" aria-hidden="true"></i></span> OCCUPATO
+      </div>
+
+      <div *ngFor="let row of plant.rowLetters">
+              <span class="seat" *ngFor="let col of plant.columnNumber" (click)="seatClicked(row + col, i)"
+                    [ngSwitch]="getStatus(row + col, i)">
+                  <span *ngSwitchCase="'selected-vip'" class="selected-vip"><i class="fa fa-square" aria-hidden="true"></i></span>
+                  <span *ngSwitchCase="'selected-premium'" class="selected-premium"><i class="fa fa-square" aria-hidden="true"></i></span>
+                  <span *ngSwitchCase="'selected-standard'" class="selected-standard"><i class="fa fa-square" aria-hidden="true"></i></span>
+                  <span *ngSwitchCase="'reserved'" class="reservedSeat"><i class="fa fa-square" aria-hidden="true"></i></span>
+                  <span *ngSwitchCase="'vip'" class="vipSeat"><i class="fa fa-square" aria-hidden="true"></i></span>
+                  <span *ngSwitchCase="'premium'" class="premiumSeat"><i class="fa fa-square" aria-hidden="true"></i></span>
+                  <span *ngSwitchCase="'standard'" class="standardSeat"><i class="fa fa-square" aria-hidden="true"></i></span>
+                  <span *ngSwitchCase="'white'"><i class="fa fa-square noSeat" aria-hidden="true"></i></span>
+              </span>
+      </div>
+    </div>
+  </main>
+</div>
+

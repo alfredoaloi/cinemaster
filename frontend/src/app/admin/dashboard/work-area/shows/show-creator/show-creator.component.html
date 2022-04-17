@@ -1,0 +1,132 @@
+<div class="header">
+  <h5 id="header" *ngIf="type === 'Add' else elseBlock">Aggiungi Spettacoli</h5>
+  <ng-template #elseBlock><h5 id="header">Modifica Spettacolo #{{showId}}</h5></ng-template>
+
+</div>
+<div class="wrap" id="show-creator-container">
+  <h6>Nome dello spettacolo</h6>
+  <div class='textboxes'>
+    <ejs-textbox placeholder="Inserisci il nome dello spettacolo" floatLabelType="Auto" [(value)]="showName"></ejs-textbox>
+  </div>
+
+  <br><br>
+
+  <h6>Descrizione dello spettacolo</h6>
+  <div class='textboxes'>
+    <ejs-textbox [multiline]="true" placeholder="Inserisci la descrizione dello spettacolo" floatLabelType="Auto" [(value)]="showDescription"></ejs-textbox>
+  </div>
+
+  <br><br>
+
+  <!-- To implement in the next Sprint -->
+  <!--
+  <h6>Immagine di copertina dello spettacolo</h6>r
+  <ejs-uploader #coverUploader id='fileupload' (selected)="singleFileForcing()" maxFileSize = 1500000 allowedExtensions = '.jpg, .jpeg, .png'></ejs-uploader>
+  -->
+
+  <h6>URL immagine di copertina</h6>
+  <div class='textboxes'>
+    <ejs-textbox placeholder="Inserisci l'URL dell'immagine di copertina" floatLabelType="Auto" [(value)]="showPhotoUrl"></ejs-textbox>
+  </div>
+
+  <br><br>
+
+  <h6>Data di uscita</h6>
+  <ejs-datepicker [(value)]="showReleaseDate" format='dd/MM/yyyy' placeholder="Il giorno nel quale è stato rilasciato lo spettacolo" floatLabelType="Auto"></ejs-datepicker>
+
+
+  <br><br><br>
+
+  <h6>Lingua di riproduzione dello spettacolo</h6>
+  <ejs-dropdownlist [(value)]="showLanguage" [dataSource]='languages' placeholder = 'Seleziona la lingua nella quale viene trasmesso lo spettacolo' floatLabelType="Auto"></ejs-dropdownlist>
+
+  <br><br>
+
+  <h6>Luogo di produzione</h6>
+  <ejs-dropdownlist [(value)]="showProductionLocation" [dataSource]='nations' placeholder = 'Seleziona il luogo nel quale è stato prodotto lo spettacolo' floatLabelType="Auto"></ejs-dropdownlist>
+
+  <br><br>
+
+  <h6>Rating dello spettacolo</h6>
+  <ejs-dropdownlist [(value)]="showRating" [dataSource]='showRatingList' placeholder = "Seleziona il rating d'età per le persone che possono visionare lo spettacolo" floatLabelType="Auto"></ejs-dropdownlist>
+
+  <br><br>
+
+  <h6>URL Trailer Spettacolo</h6>
+  <div class='textboxes'>
+    <ejs-textbox placeholder="Inserisci l'URL del trailer dello spettacolo" floatLabelType="Auto" [(value)]="showTrailerUrl"></ejs-textbox>
+  </div>
+
+  <br><br>
+
+  <h6>Durata dello spettacolo</h6>
+  <div class='textboxes'>
+    <ejs-textbox placeholder="Inserisci la durata, in minuti, dello spettacolo" floatLabelType="Auto" [(value)]="showLength"></ejs-textbox>
+  </div>
+
+  <br><br>
+
+  <h6>Attori partecipanti</h6>
+  <ejs-multiselect *ngIf="showActorsLoaded" [(value)]="showActorsSelected" id='show-actors-selector'  [dataSource]='showActorsList' placeholder = 'Seleziona gli attori che hanno partecipato allo spettacolo' floatLabelType="Auto"></ejs-multiselect>
+  <div *ngIf="!showActorsLoaded" style="text-align: center; margin-top: 5%; color: #ff914d;">
+    <div class="spinner-border"></div>
+  </div>
+  <br><br>
+
+  <h6>Registi partecipanti</h6>
+  <ejs-multiselect *ngIf="showDirectorsLoaded" [(value)]="showDirectorsSelected" id='show-directors-selector' [dataSource]='showDirectorsList' placeholder = 'Seleziona i registi che hanno partecipato allo spettacolo' floatLabelType="Auto"></ejs-multiselect>
+  <div *ngIf="!showDirectorsLoaded" style="text-align: center; margin-top: 5%; color: #ff914d;">
+    <div class="spinner-border"></div>
+  </div>
+  <br><br>
+
+  <h6>Categorie di appartenenza</h6>
+  <ejs-multiselect *ngIf="showCategoriesLoaded" [(value)]="showCategoriesSelected" id='show-categories-selector' [dataSource]='showCategoriesList' placeholder = 'Seleziona le categorie di appartenenza dello spettacolo' floatLabelType="Auto"></ejs-multiselect>
+  <div *ngIf="!showCategoriesLoaded" style="text-align: center; margin-top: 5%; color: #ff914d;">
+    <div class="spinner-border"></div>
+  </div>
+  <br><br>
+
+  <h6>In evidenza</h6>
+  <ejs-checkbox [(checked)]="showIsHighlighted" label="Seleziona se lo spettacolo sarà mostrato nel Carousel della home page"></ejs-checkbox>
+
+  <br><br>
+
+  <div *ngIf="showIsHighlighted" id="url-highlighted-cover-container">
+    <h6>URL immagine in evidenza</h6>
+    <div class='textboxes'>
+      <ejs-textbox placeholder="Inserisci l'URL dell'immagine in evidenza" floatLabelType="Auto" [(value)]="showHighlightedUrl"></ejs-textbox>
+    </div>
+    <br><br>
+  </div>
+
+  <button ejs-button cssClass="e-custom e-block" (click)="createNewShow()" *ngIf="type === 'Add' else elseClause">Inserisci spettacolo</button>
+  <ng-template #elseClause><button ejs-button cssClass="e-custom e-block" (click)="updateShow()">Modifica spettacolo {{showId}}</button></ng-template>
+
+  <ejs-toast cssClass="e-toast-danger" #invalidFieldsToastAlert [position]='position'>
+    <ng-template #title>
+      <div>Errore!</div>
+    </ng-template>
+    <ng-template #content>
+      <div>Uno o più campi inseriti non sono validi</div>
+    </ng-template>
+  </ejs-toast>
+
+  <ejs-toast cssClass="e-toast-danger" #invalidResponseToastAlert [position]='position'>
+    <ng-template #title>
+      <div>Errore!</div>
+    </ng-template>
+    <ng-template #content>
+      <div>E' stato riscontrato un errore durante l'aggiunta dello spettacolo</div>
+    </ng-template>
+  </ejs-toast>
+
+  <ejs-toast cssClass="e-toast-success" #correctResponseToastAlert [position]='position'>
+    <ng-template #title>
+      <div>Ottimo!</div>
+    </ng-template>
+    <ng-template #content>
+      <div>Spettacolo aggiunto correttamente</div>
+    </ng-template>
+  </ejs-toast>
+</div>

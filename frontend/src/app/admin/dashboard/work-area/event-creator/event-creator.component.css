@@ -1,0 +1,13 @@
+.e-plus-icon::before {
+  content: '\e823';
+}
+
+#event-creator-container {
+  padding: 20px;
+}
+
+h3, h4, h5:not(#header), h6{
+  font-family: "Helvetica Neue", "Helvetica", "Arial", sans-serif, "-apple-system", "BlinkMacSystemFont";
+  color: #ff914d;
+  font-weight: bold;
+}

@@ -1,0 +1,46 @@
+<div class="header">
+  <h5>Lista Eventi</h5>
+</div>
+<div *ngIf="!loaded" class="spinner">
+  <div class="spinner-border"></div>
+</div>
+<div *ngIf="loaded" class="control-section">
+  <ejs-grid #grid [dataSource]='data' [enableInfiniteScrolling]='true' height='75vh' [allowPaging]='true' [pageSettings]='pageSettings'
+            [editSettings]='editSettings' (actionBegin)="actionBegin($event)"> <!--(actionBegin)="actionBegin($event)"-->
+    <e-columns>
+      <e-column field='id' headerText='ID' width='50' textAlign='Center' isPrimaryKey="true"></e-column>
+      <e-column field='show.name' headerText='Show' width='100' textAlign='Center' [validationRules]='showRules' isPrimaryKey="true"></e-column>
+      <e-column field='room.name' headerText='Sala' width='60' textAlign='Center' [validationRules]='roomRules' isPrimaryKey="true"></e-column>
+      <e-column field='price.standardPrice' headerText='Prezzo Standard' width='60' format='C2' textAlign='Center'></e-column>
+      <e-column field='price.premiumPrice' headerText='Prezzo Premium' width='60' format='C2' textAlign='Center'></e-column>
+      <e-column field='price.vipPrice' headerText='Prezzo Vip' width='60' format='C2' textAlign='Center'></e-column>
+      <e-column field='date' headerText='Data' textAlign='Center' width='80' type='date' format='yMd' editType='datepickeredit'></e-column>
+      <e-column field='startTime' headerText='Orario inizio' textAlign='Center' width='80' type="time" editType="timepickeredit">></e-column>
+      <e-column field='endTime' headerText='Orario fine' textAlign='Center' width='80' type="time" editType="timepickeredit"></e-column>
+      <e-column headerText='Elimina' width='160' [commands]='commands'></e-column>
+    </e-columns>
+  </ejs-grid>
+</div>
+<ejs-toast cssClass="e-toast-danger" #invalidResponseToastAlert [position]='position'>
+  <ng-template #title>
+    <div>Errore!</div>
+  </ng-template>
+  <ng-template #content>
+    <div>E' stato riscontrato un errore... Riprova per favore!</div>
+  </ng-template>
+</ejs-toast>
+
+<ejs-toast cssClass="e-toast-success" #correctResponseToastAlert [position]='position'>
+  <ng-template #title>
+    <div>Ottimo!</div>
+  </ng-template>
+  <ng-template #content>
+    <div>Evento modificato correttamente</div>
+  </ng-template>
+</ejs-toast>
+
+<ejs-toast cssClass="e-toast-success" #correctDeleteToastAlert [position]='position'>
+  <ng-template #content>
+    <div>Evento eliminato correttamente</div>
+  </ng-template>
+</ejs-toast>

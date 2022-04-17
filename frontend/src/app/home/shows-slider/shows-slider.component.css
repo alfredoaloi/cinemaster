@@ -1,0 +1,127 @@
+a {
+  -webkit-transition: all 0.3s ease 0s;
+  -o-transition: all 0.3s ease 0s;
+  transition: all 0.3s ease 0s;
+}
+
+a:hover, a:focus {
+  text-decoration: none;
+  outline: none;
+}
+
+#shows-list-spinner {
+  margin: 50px;
+}
+
+#shows-list-container {
+  margin: 20px 0;
+  border-bottom: 3px solid #ff914d;
+}
+
+.shows-slider {
+  padding: 30px;
+  background-color: #0e0e0e;
+}
+
+.shows-slider .slider-title {
+  text-align: center;
+  color: #ff914d;
+}
+
+.slide .carousel-thumb {
+  margin: 0 1px;
+  border-bottom: 2px solid #ff914d;
+}
+
+.slide .carousel-content {
+  background: rgba(254, 121, 0, 0.6) none repeat scroll 0 0;
+  bottom: 0;
+  display: none;
+  padding: 20px 10px;
+  position: absolute;
+  width: 100%;
+  text-align: center;
+}
+
+.slide .carousel-content .carousel-title {
+  font-size: 20px;
+  font-weight: bold;
+  margin-top: 0;
+  margin-bottom: 2px;
+}
+
+.slide .carousel-content .carousel-title a {
+  color: #fff;
+}
+
+.slide .carousel-content .carousel-title a:hover {
+  color: #000;
+}
+
+.slide .carousel-content .carousel-release {
+  font-size: 12px;
+  color: #fff;
+  margin-bottom: 7px;
+}
+
+.slide .carousel-content .carousel-release span {
+  padding-left: 4px;
+}
+
+.slide .carousel-content .carousel-button {
+  padding-bottom: 0px;
+}
+
+.slide .carousel-content .carousel-button a {
+  color: #fff;
+  margin-right: 20px;
+  font-size: 12px;
+}
+
+.slide .carousel-content .carousel-button a:last-child {
+  margin-right: 0;
+}
+
+.slide .carousel-content .carousel-button a:hover {
+  color: #000;
+}
+
+.slide .carousel-content .carousel-button a:hover i {
+  color: #000;
+}
+
+.slide .carousel-content .carousel-button i {
+  background: #fff none repeat scroll 0 0;
+  border-radius: 50%;
+  color: #3b3b3b;
+  font-size: 9px;
+  height: 20px;
+  line-height: 22px;
+  margin-right: 3px;
+  text-align: center;
+  width: 20px;
+}
+
+.slide.slick-center {
+  position: relative;
+  -webkit-transform: scale(1.2);
+  -ms-transform: scale(1.2);
+  -o-transform: scale(1.2);
+  transform: scale(1.2);
+}
+
+.slide.slick-center .carousel-thumb {
+  border-left: 2px solid #000;
+  border-right: 2px solid #000;
+  border-bottom: none;
+  margin: 0;
+}
+
+.slide.slick-center .carousel-content {
+  display: block;
+}
+
+.e-tab .e-tab-header .e-toolbar-item .e-tab-text {
+  font-size: 24px;
+}
+

@@ -1,0 +1,90 @@
+<div class="header">
+  <h5 id="header">Inserisci {{type}}</h5>
+</div>
+
+<div class="wrap" id="event-creator-container">
+
+  <h6>Spettacolo trasmesso</h6>
+  <ejs-dropdownlist *ngIf="showsLoaded" [(value)]="showSelectedName" [dataSource]='availablesShowsList' placeholder = 'Seleziona lo spettacolo che verrà trasmesso' floatLabelType="Auto"></ejs-dropdownlist>
+  <div *ngIf="!showsLoaded" style="text-align: center; margin-top: 5%; color: #ff914d;">
+    <div class="spinner-border"></div>
+  </div>
+  <br>
+
+  <h6>Data di inizio dell'evento</h6>
+  <ejs-datepicker [(value)]="eventStardDate" format='dd/MM/yyyy' placeholder="Il giorno di inizio trasmissione dello spettacolo" floatLabelType="Auto"></ejs-datepicker>
+
+  <br><br>
+
+  <h6>Data di fine dell'evento</h6>
+  <ejs-datepicker [(value)]="eventEndDate" format='dd/MM/yyyy' placeholder="Il giorno di fine trasmissione dello spettacolo" floatLabelType="Auto"></ejs-datepicker>
+
+  <br><br>
+
+  <h6>Prezzi dei posti in sala</h6>
+  <br>
+  <div class='textboxes'>
+    <ejs-textbox placeholder="Inserisci il prezzo per i posti di categoria Standard" floatLabelType="Auto" [(value)]="eventPriceSelected.standardPrice"></ejs-textbox>
+  </div>
+  <br>
+  <div class='textboxes'>
+    <ejs-textbox placeholder="Inserisci il prezzo per i posti di categoria Premium" floatLabelType="Auto" [(value)]="eventPriceSelected.premiumPrice"></ejs-textbox>
+  </div>
+  <br>
+  <div class='textboxes'>
+    <ejs-textbox placeholder="Inserisci il prezzo per i posti di categoria Vip" floatLabelType="Auto" [(value)]="eventPriceSelected.vipPrice"></ejs-textbox>
+  </div>
+  <br><br>
+
+  <h6>Sala di riproduzione</h6>
+  <ejs-dropdownlist *ngIf="eventRoomsLoaded" [(value)]="eventRoomNameSelected" id='event-room-selector' [dataSource]='eventRoomsList' placeholder = "Seleziona la sala nella quale verrà trasmesso l'evento" floatLabelType="Auto"></ejs-dropdownlist>
+  <div *ngIf="!eventRoomsLoaded" style="text-align: center; margin-top: 5%; color: #ff914d;">
+    <div class="spinner-border"></div>
+  </div>
+  <br><br>
+
+  <h6>Orario inizio spettacolo</h6>
+  <ejs-timepicker [(value)]="eventTimeSlotsSelected[0]" placeholder="L'orario in cui lo spettacolo inizierà" [format]="timeFormat" [step]="timeInterval" floatLabelType="Auto"></ejs-timepicker>
+  <br><br>
+
+  <ng-container #timesContainer id="event-time-slots"></ng-container>
+  <ng-template #timeSlotTemplate let-viewName="name">
+    <h6>Orario inizio spettacolo</h6>
+    <ejs-timepicker [(value)]="eventTimeSlotsSelected[viewName]" placeholder="L'orario in cui lo spettacolo inizierà" [format]="timeFormat" [step]="timeInterval" floatLabelType="Auto"></ejs-timepicker>
+    <br><br>
+  </ng-template>
+
+  <h6>Aggiungi un nuovo orario di inizio</h6>
+  <br>
+  <button ejs-button cssClass="e-round" iconCss="e-icons e-plus-icon" [isPrimary]="true" (click)="insertNewTimeSlot()"></button>
+  <br><br>
+
+  <button ejs-button cssClass="e-custom e-block" (click)="createNewEvent()">Inserisci evento</button>
+
+  <ejs-toast cssClass="e-toast-danger" #invalidFieldsToastAlert [position]='position'>
+    <ng-template #title>
+      <div>Errore!</div>
+    </ng-template>
+    <ng-template #content>
+      <div>Uno o più campi inseriti non sono validi</div>
+    </ng-template>
+  </ejs-toast>
+
+  <ejs-toast cssClass="e-toast-danger" #invalidResponseToastAlert [position]='position'>
+    <ng-template #title>
+      <div>I seguenti eventi non sono stati aggiunti</div>
+    </ng-template>
+    <ng-template #content>
+      <div>{{invalidResponseAlertBodyText}}</div>
+    </ng-template>
+  </ejs-toast>
+
+  <ejs-toast cssClass="e-toast-success" #correctResponseToastAlert [position]='position'>
+    <ng-template #title>
+      <div>Ottimo!</div>
+    </ng-template>
+    <ng-template #content>
+      <div>Evento aggiunto correttamente</div>
+    </ng-template>
+  </ejs-toast>
+</div>

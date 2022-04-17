@@ -1,0 +1,7 @@
+<app-navbar></app-navbar>
+<div class="main-container">
+<app-carousel [hidden]="userIsSearching"></app-carousel>
+<app-search-results class="middle-component" #searchResultsComponent [hidden]="!userIsSearching"></app-search-results>
+<app-shows-slider [hidden]="userIsSearching"></app-shows-slider>
+</div>
+<app-footer></app-footer>

@@ -1,0 +1,80 @@
+<ngx-paypal *ngIf="bookingCompleted && !bookingConfirmation" [config]="payPalConfig"></ngx-paypal>
+
+<div *ngIf="!bookingTrying && !couponTrying" class='textboxes'>
+  <ejs-textbox placeholder="Inserisci il Codice Coupon e confermalo con il bottone sottostante" floatLabelType="Auto" [(value)]="couponCode"></ejs-textbox>
+  <button ejs-button cssClass="e-custom e-block" (click)="verifyCouponAvailability()">Applica Codice Coupon</button>
+  <br><br>
+</div>
+
+<div class="booking-spinner" *ngIf="couponTrying" style="text-align: center; margin-top: 5%; color: #ff914d;">
+  <div class="spinner-border"></div>
+</div>
+
+<button *ngIf="!bookingTrying" ejs-button cssClass="e-custom e-block" (click)="checkBookingAvailability()">Prenota e procedi al pagamento</button>
+
+<div class="booking-spinner" *ngIf="(bookingTrying && !bookingCompleted) || bookingConfirmation" style="text-align: center; margin-top: 5%; color: #ff914d;">
+  <div class="spinner-border"></div>
+</div>
+
+<ejs-toast cssClass="e-toast-danger" #bookingFailedToastAlert [position]='position'>
+  <ng-template #title>
+    <div>Errore!</div>
+  </ng-template>
+  <ng-template #content>
+    <div>I posti selezionati non sono più disponibili, selezionane altri</div>
+  </ng-template>
+</ejs-toast>
+
+<ejs-toast cssClass="e-toast-danger" #paymentFailedToastAlert [position]='position'>
+  <ng-template #title>
+    <div>Errore!</div>
+  </ng-template>
+  <ng-template #content>
+    <div>E' stato riscontrato un errore durante il pagamento, riprova</div>
+  </ng-template>
+</ejs-toast>
+
+<ejs-toast cssClass="e-toast-danger" #couponInvalidAlert [position]='position'>
+  <ng-template #title>
+    <div>Errore!</div>
+  </ng-template>
+  <ng-template #content>
+    <div>Il coupon inserito non è valido</div>
+  </ng-template>
+</ejs-toast>
+
+<ejs-toast cssClass="e-toast-danger" #notAuthorizedAlert [position]='position'>
+  <ng-template #title>
+    <div>Errore!</div>
+  </ng-template>
+  <ng-template #content>
+    <div>Effettua il log-in prima di poter prenotare un pagamento</div>
+  </ng-template>
+</ejs-toast>
+
+<ejs-toast cssClass="e-toast-success" #bookingCompletedToastAlert [position]='position'>
+  <ng-template #title>
+    <div>Ottimo!</div>
+  </ng-template>
+  <ng-template #content>
+    <div>Prenotazione completata, procedi con il pagamento</div>
+  </ng-template>
+</ejs-toast>
+
+<ejs-toast cssClass="e-toast-success" #paymentCompletedToastAlert [position]='position'>
+  <ng-template #title>
+    <div>Ottimo!</div>
+  </ng-template>
+  <ng-template #content>
+    <div>Pagamento eseguito correttamente! Riceverai un'email, con i biglietti stampabili, a breve</div>
+  </ng-template>
+</ejs-toast>
+
+<ejs-toast cssClass="e-toast-success" #couponValidAlert [position]='position'>
+  <ng-template #title>
+    <div>Ottimo!</div>
+  </ng-template>
+  <ng-template #content>
+    <div>Il coupon inserito è valido e lo sconto è stato applicato</div>
+  </ng-template>
+</ejs-toast>

@@ -1,0 +1,44 @@
+
+<link rel="stylesheet" id="amy-movie-style-css" href="http://demo.amytheme.com/movie/demo/single-cinema/wp-content/themes/amy-movie/css/style.css?ver=1.0.0" type="text/css">
+
+<body class="page-template-default page page-id-190 amy-header-default  single-author wpb-js-composer js-comp-ver-6.1 vc_responsive hasresponsive">
+<div id="amy-menu-overlay"></div>
+
+<div  class="col-md-12 middle-element">
+  <div class="page-content">
+    <div class="amy-section wpb_row  "><div class="vc_row wpb_row vc_row-fluid"><div class="wpb_column vc_column_container vc_col-sm-12"><div class="vc_column-inner"><div class="wpb_wrapper"><div class="amy-movie-layout-list "><div class="amy-movie-list">
+
+      <div *ngIf="searchResults.length == 0" class="row">
+
+          <div class="container">
+            <!-- Div logo -->
+            <div class="py-5 text-center">
+              <h2>Nessun prodotto trovato</h2>
+              <p style="font-size: medium;">Prova a cercare usando parole diverse.</p>
+              <p class="lead"></p>
+            </div>
+          </div>
+      </div>
+      <div *ngFor="let result of searchResults">
+        <app-result-item [id] = "result.id" [urlTrailer]="result.urlTrailer" [rating]="result.rating" [releaseDate]="result.releaseDate" [length]="result.length" [photoUrl]="result.photoUrl" [name]="result.name" [language]="result.language" [description]="result.description" [categories]="result.categories" [directors]="result.directors" [actors]="result.actors"></app-result-item>
+
+      </div>
+
+
+
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+<div id="fb-root" class=" fb_reset"><div style="position: absolute; top: -10000px; width: 0px; height: 0px;"><div></div></div>
+</div>
+</body>

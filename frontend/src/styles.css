@@ -1,0 +1,33 @@
+/* You can add global styles to this file, and also import other style files */
+@import '../styles/bootstrap4.css';
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.nopad {
+  padding: 0;
+}
+
+.slick-list {
+  padding: 40px 50px !important;
+}
+
+.color-primary {
+  color: #ff914d;
+}
+
+.primary-color {
+  background-color: #ff914d;
+  color: white;
+}
+
+.spinner {
+  text-align: center;
+  margin-top: 5%;
+  color: #ff914d;
+}
+
+@font-face {
+  font-family: "Bangers";
+  src: local(Bangers), url(./assets/fonts/Bangers-Regular.ttf) format("truetype");
+}

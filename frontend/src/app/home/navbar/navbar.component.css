@@ -1,0 +1,13 @@
+.myColor{
+  color: #ff914d;
+}
+.search{
+  color: #ff914d ;
+  border-color: #ff914d;
+}
+.search:hover{
+  border-color: black ;
+}
+.fa-user{
+  color: #ff914d;
+}

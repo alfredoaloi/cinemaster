@@ -1,0 +1,132 @@
+<nav class="navbar navbar-expand-md bg-light justify-content-end">
+  <ul class="navbar-nav">
+    <li class="nav-item">
+      <button class="btn primary-color" (click)="doLogout()">Logout</button>
+    </li>
+  </ul>
+</nav>
+<div *ngIf="!loaded" class="spinner">
+  <div class="spinner-border"></div>
+</div>
+<div class="container-fluid" *ngIf="loaded">
+  <div class="header">
+    <h2 class="color-primary title">cine Cashier</h2>
+  </div>
+  <div class="control-section e-tab-section">
+    <div class="e-sample-resize-container">
+      <!-- Render the Tab Component -->
+      <ejs-tab id="tab_default" heightAdjustMode='Auto'>
+        <e-tabitems>
+          <e-tabitem [header]="headerText[0]">
+            <ng-template #content>
+              <ejs-grid  #grid2 [dataSource]='events' [enableInfiniteScrolling]='true' height='50vh' allowTextWrap='true'>
+                <e-columns>
+                  <e-column field='show.name' headerText='Show' width='100' textAlign='Center'></e-column>
+                  <e-column field='show.description' headerText='Descrizione' width='100' textAlign='Center'></e-column>
+                  <e-column field='room.name' headerText='Sala' width='60' textAlign='Center'></e-column>
+                  <e-column field='price.standardPrice' headerText='Prezzo Standard' width='60' format='C2' textAlign='Center'></e-column>
+                  <e-column field='price.premiumPrice' headerText='Prezzo Premium' width='60' format='C2' textAlign='Center'></e-column>
+                  <e-column field='price.vipPrice' headerText='Prezzo Vip' width='60' format='C2' textAlign='Center'></e-column>
+                  <e-column field='startTime' headerText='Orario inizio' textAlign='Center' width='80' type="time"></e-column>
+                  <e-column field='endTime' headerText='Orario fine' textAlign='Center' width='80' type="time"></e-column>
+                  <e-column headerText='Piantina' width='70' textAlign='Center'>
+                    <ng-template #template let-data>
+                      <button class="btn primary-color" (click)="renderPlant(data)">{{data.room.name}}</button>
+                    </ng-template>
+                  </e-column>
+                </e-columns>
+              </ejs-grid>
+            </ng-template>
+          </e-tabitem>
+          <e-tabitem [header]="headerText[1]">
+            <ng-template #content>
+              <ejs-grid  #grid2 [dataSource]='purchases' [enableInfiniteScrolling]='true' height='50vh'
+                         [editSettings]='editSettings'  allowTextWrap='true' (actionBegin)="actionBegin($event)">
+                <e-columns>
+                  <e-column field='id' headerText='ID' width='100' textAlign='Center'></e-column>
+                  <e-column field='event.show.name' headerText='Spettacolo' width='100' textAlign='Center'></e-column>
+                  <e-column field='event.room.name' headerText='Sala' width='60' textAlign='Center'></e-column>
+                  <e-column field='price' headerText='Prezzo' width='60' format='C2' textAlign='Center'></e-column>
+                  <e-column field='seat.row' headerText='Riga Posto' width='60' textAlign='Center'></e-column>
+                  <e-column field='seat.column' headerText='Colonna Posto' width='60' textAlign='Center'></e-column>
+                  <e-column headerText='Biglietto' width='70' textAlign='Center'>
+                    <ng-template #template let-data>
+                      <button class="btn primary-color" (click)="getTicket(data.id)"><i class="fa fa-file-pdf-o" aria-hidden="true"></i></button>
+                    </ng-template>
+                  </e-column>
+                  <e-column headerText='Elimina' width='150' [commands]='commands'></e-column>
+                </e-columns>
+              </ejs-grid>
+            </ng-template>
+          </e-tabitem>
+        </e-tabitems>
+      </ejs-tab>
+    </div>
+  </div>
+</div>
+<app-cashier-plant #seatReservationComponent></app-cashier-plant>
+<div style="margin-bottom: 20px; padding: 3%;" *ngIf="wantsToBuy">
+  <br>
+  <h3 style="color: #ff914d; font-weight: bold;">Riepilogo prenotazione</h3>
+  <h3>{{seatReservation.movieTitle}} - {{seatReservation.date}} - {{seatReservation.hour}} </h3>
+  <div *ngFor="let e of seatReservation.plants">
+    <h4 style="color: #ff914d; font-weight: bold;">Costo biglietti {{e.name}}</h4>
+    <h6>&nbsp;&nbsp;&nbsp;&nbsp; Poltrona Standard: {{e.price.standardPrice}} €</h6>
+    <h6>&nbsp;&nbsp;&nbsp;&nbsp; Poltrona Premium: {{e.price.premiumPrice}} €</h6>
+    <h6>&nbsp;&nbsp;&nbsp;&nbsp; Poltrona VIP: {{e.price.vipPrice}} €</h6>
+  </div>
+
+  <h4 style="color: #ff914d; font-weight: bold;">Posti selezionati:</h4>
+  <h6 *ngFor="let s of seatReservation.seatSelected()">&nbsp;&nbsp;&nbsp;&nbsp; {{s}}</h6>
+  <h4 style="color: #ff914d; font-weight: bold;">Totale:</h4>
+  <h5 style="font-weight: bold;">&nbsp;&nbsp;&nbsp;&nbsp; {{seatReservation.getAmount()}} €</h5>
+  <div class="text-center" *ngIf="!loading">
+    <button class="btn-lg primary-color" (click)="confirm()">Conferma pagamento</button>
+  </div>
+  <div class="text-center" *ngIf="loading">
+    <div class="spinner-border"></div>
+  </div>
+</div>
+
+<ejs-toast cssClass="e-toast-danger" #invalidResponseToastAlert [position]='position'>
+  <ng-template #title>
+    <div>Errore!</div>
+  </ng-template>
+  <ng-template #content>
+    <div>E' stato riscontrato un errore interno... Riprova per favore!</div>
+  </ng-template>
+</ejs-toast>
+
+<ejs-toast cssClass="e-toast-success" #correctDeleteToastAlert [position]='position'>
+  <ng-template #content>
+    <div>Prenotazione eliminata correttamente! Puoi procedere al rimborso!</div>
+  </ng-template>
+</ejs-toast>
+
+
+<ejs-toast cssClass="e-toast-danger" #bookingFailedToastAlert [position]='position'>
+  <ng-template #title>
+    <div>Errore!</div>
+  </ng-template>
+  <ng-template #content>
+    <div>I posti selezionati non sono più disponibili, selezionane altri</div>
+  </ng-template>
+</ejs-toast>
+
+<ejs-toast cssClass="e-toast-success" #bookingCompletedToastAlert [position]='position'>
+  <ng-template #title>
+    <div>Ottimo!</div>
+  </ng-template>
+  <ng-template #content>
+    <div>Prenotazione completata!</div>
+  </ng-template>
+</ejs-toast>
+
+<ejs-toast cssClass="e-toast-danger" #noSeatsAlert [position]='position'>
+  <ng-template #title>
+    <div>Ops!</div>
+  </ng-template>
+  <ng-template #content>
+    <div>Prenotazione non andata a buon fine, può essere che ci sia stato un errore interno o che i posti non siano più disponibili.</div>
+  </ng-template>
+</ejs-toast>

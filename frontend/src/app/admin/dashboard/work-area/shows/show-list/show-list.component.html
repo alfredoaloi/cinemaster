@@ -1,0 +1,50 @@
+<div class="header">
+  <h5>Lista Spettacoli</h5>
+</div>
+<div *ngIf="!loaded" class="spinner">
+  <div class="spinner-border"></div>
+</div>
+<div *ngIf="loaded" class="control-section">
+  <ejs-grid #grid [dataSource]='data' [enableInfiniteScrolling]='true' height='75vh' [allowPaging]='true' [pageSettings]='pageSettings'
+            [editSettings]='editSettings'  allowTextWrap='true' (actionBegin)="actionBegin($event)">
+    <e-columns>
+      <e-column field='id' headerText='Id' width='50' textAlign='Center' isPrimaryKey="true"></e-column>
+      <e-column field='name' headerText='nome' width='100' textAlign='Center' [validationRules]='titleRules'></e-column>
+      <e-column field='description' headerText='Descrizione' width='180' textAlign='Center' [validationRules]='descriptionRules'></e-column>
+      <e-column field='productionLocation' headerText='Produzione' textAlign='Center' width='100' editType="dropdownedit"></e-column>
+      <e-column field='language' headerText='Lingua' textAlign='Center' width='150' editType="dropdownedit"></e-column>
+      <e-column field='photoUrl' headerText='URL foto' width='160' textAlign='Center' [validationRules]='descriptionRules'></e-column>
+      <e-column field='length' headerText='Durata' width='70' editType='numericedit' textAlign='Center'></e-column>
+      <e-column field='releaseDate' headerText='Uscita' width='80' type="date" format="yMd" editType='datepickeredit' textAlign='Center'></e-column>
+      <e-column field='actors' headerText='Attori' width='120' textAlign='Center'></e-column>
+      <e-column field='directors' headerText='Registi' width='120' textAlign='Center'></e-column>
+      <e-column field='categories' headerText='categorie' width='120' textAlign='Center'></e-column>
+      <e-column field='comingSoon' headerText='CS' textAlign='Center' width='50'  displayAsCheckBox="true" editType="booleanedit"></e-column>
+      <e-column field='highlighted' headerText='Highlighted' textAlign='Center' width='100'  displayAsCheckBox="true" editType="booleanedit"></e-column>
+      <e-column headerText='Modifica' width='160' [commands]='commands'></e-column>
+    </e-columns>
+  </ejs-grid>
+</div>
+<ejs-toast cssClass="e-toast-danger" #invalidResponseToastAlert [position]='position'>
+  <ng-template #title>
+    <div>Errore!</div>
+  </ng-template>
+  <ng-template #content>
+    <div>E' stato riscontrato un errore... Riprova per favore!</div>
+  </ng-template>
+</ejs-toast>
+
+<ejs-toast cssClass="e-toast-success" #correctResponseToastAlert [position]='position'>
+  <ng-template #title>
+    <div>Ottimo!</div>
+  </ng-template>
+  <ng-template #content>
+    <div>Spettacolo modificato correttamente</div>
+  </ng-template>
+</ejs-toast>
+
+<ejs-toast cssClass="e-toast-success" #correctDeleteToastAlert [position]='position'>
+  <ng-template #content>
+    <div>Spettacolo eliminato correttamente</div>
+  </ng-template>
+</ejs-toast>

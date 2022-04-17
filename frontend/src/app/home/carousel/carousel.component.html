@@ -1,0 +1,16 @@
+<div *ngIf="!loaded" style="text-align: center; margin-top: 5%; color: #ff914d;">
+  <div class="spinner-border"></div>
+</div>
+
+<ngb-carousel *ngIf="loaded" class="middle-element">
+<!--  <div *ngFor="let result of searchResults">-->
+  <ng-template ngbSlide *ngFor="let result of searchResults">
+    <div class="picsum-img-wrapper">
+      <img class="d-block w-75 mx-auto" [src]="result.urlHighlighted" alt="Image">
+    </div>
+    <div class="carousel-caption">
+      <h3>{{result.name}}</h3>
+      <p>{{result.description}}</p>
+    </div>
+  </ng-template>
+</ngb-carousel>

@@ -1,0 +1,18 @@
+<div class="login-dark" id ="mainDiv">
+  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" method="post">
+    <h2 class="sr-only">Login Form</h2>
+    <div class="illustration"><img (click)="goHome();" src="../../assets/logos/logo.png" style="width: 267px;height: 267px;" alt="Logo"></div>
+    <div class="form-group"><input class="form-control" formControlName="username" placeholder="Nome utente"></div>
+    <div class="form-group"><input class="form-control" type="password" formControlName="password" placeholder="Password"></div>
+    <div class="form-group"><button class="btn btn-primary btn-block" type="submit">Log In</button></div>
+    <div class="form-group"><button class="btn btn-primary btn-block" (click)="regComp.show();" type="button">Registrazione</button></div>
+  </form>
+</div>
+<app-registration #regComp></app-registration>
+
+
+<div id="toastDiv" aria-live="polite" aria-atomic="true" style="position: relative; min-height: 200px;">
+  <div class="toast" style="position: absolute; top: 0; right: 0;">
+  </div>
+</div>
+
