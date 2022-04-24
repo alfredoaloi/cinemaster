@@ -1,11 +1,20 @@
 # cinemaster
- A cinema manager project, provided with a MySQL Server persistance layer, a Spring Boot backend layer and an Angular frontend layer.
+ A cinema manager project, provided with a MySQL Server persistance layer, a Spring Boot backend layer and an Angular frontend layer
 
-## How to run
+## How to containerize
 To run the project you must have installed Docker and Docker Compose. After this step, just open a terminal in the folder of the project (the same level of the file `docker-compose.yml`) and run:
 `docker-compose up --build`
 
 Wait until the three layers are set up and then visit http://localhost:4200/home
+
+## How to deploy on Minikube
+To deploy the application to a Kubernetes local cluster, like Minikube, you must have installed Minikube and kubectl. Then, just start the server with `minikube start` and run `kubectl apply -f generated` to deploy to the local cluster. Wait until the services are set up, open two terminal and run:
+- `kubectl port-forward service/backend 8080:8080` to enable port-forwarding of backend service to http://localhost:8080
+- `kubectl port-forward service/frontend 4200:4200` to enable port forwarding of frontend service to http://localhost:4200
+
+Visit http://localhost:4200/home and you should navigate the webisite
+
+Note: all contents in the minikube folder are generated using the tool [kompose](https://kubernetes.io/docs/tasks/configure-pod-container/translate-compose-kubernetes/) that translates a docker-compose file in a set of `.yaml` files, used by kubectl to deploy something on the local cluster.
 
 ## Application features
 The application is a cinema manager. There are four types of user:
