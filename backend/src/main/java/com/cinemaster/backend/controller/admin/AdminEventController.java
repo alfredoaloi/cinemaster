@@ -22,7 +22,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping(path = "/admin/events")
-@CrossOrigin(origins = "http://localhost:4200", allowedHeaders = "*", allowCredentials = "true")
+@CrossOrigin(origins = {"http://localhost:4200", "http://localhost"}, allowedHeaders = "*", allowCredentials = "true")
 public class AdminEventController {
 
     @Autowired

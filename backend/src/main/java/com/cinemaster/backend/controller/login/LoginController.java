@@ -19,7 +19,7 @@ import java.util.Random;
 
 @RestController
 @RequestMapping(path = "/login")
-@CrossOrigin(origins = "http://localhost:4200", allowedHeaders = "*", allowCredentials = "true")
+@CrossOrigin(origins = {"http://localhost:4200", "http://localhost"}, allowedHeaders = "*", allowCredentials = "true")
 public class LoginController {
 
     @Autowired

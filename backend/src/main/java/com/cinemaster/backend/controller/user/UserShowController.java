@@ -13,7 +13,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping(path = "/shows")
-@CrossOrigin(origins = "http://localhost:4200", allowedHeaders = "*", allowCredentials = "true")
+@CrossOrigin(origins = {"http://localhost:4200", "http://localhost"}, allowedHeaders = "*", allowCredentials = "true")
 public class UserShowController {
 
     @Autowired

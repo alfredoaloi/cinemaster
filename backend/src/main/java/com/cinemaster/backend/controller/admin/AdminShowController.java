@@ -19,7 +19,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(path = "/admin/shows")
-@CrossOrigin(origins = "http://localhost:4200", allowedHeaders = "*", allowCredentials = "true")
+@CrossOrigin(origins = {"http://localhost:4200", "http://localhost"}, allowedHeaders = "*", allowCredentials = "true")
 public class AdminShowController {
 
     @Autowired

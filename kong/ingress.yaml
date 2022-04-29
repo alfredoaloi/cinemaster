@@ -1,0 +1,27 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: cinemaster
+  annotations:
+    konghq.com/preserve-host: "true"
+    konghq.com/strip-path: "true"
+spec:
+  ingressClassName: kong
+  rules:
+  - host: localhost
+    http:
+      paths:
+      - path: /
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: frontend
+            port:
+              number: 4200
+      - path: /backend
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: backend
+            port:
+              number: 8080

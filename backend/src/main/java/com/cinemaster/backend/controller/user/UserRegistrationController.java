@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 
 @RestController
 @RequestMapping(path = "/registration")
-@CrossOrigin(origins = "http://localhost:4200", allowedHeaders = "*", allowCredentials = "true")
+@CrossOrigin(origins = {"http://localhost:4200", "http://localhost"}, allowedHeaders = "*", allowCredentials = "true")
 public class UserRegistrationController {
 
     @Autowired
