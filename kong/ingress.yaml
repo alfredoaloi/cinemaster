@@ -3,8 +3,7 @@ kind: Ingress
 metadata:
   name: cinemaster
   annotations:
-    konghq.com/preserve-host: "true"
-    konghq.com/strip-path: "true"
+    konghq.com/override: cinemaster-customization
 spec:
   ingressClassName: kong
   rules:
