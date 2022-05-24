@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ include "cinemaster.fullname" . }}-backend-claim0
+  labels:
+    io.kompose.service: backend-claim0
+  {{- include "cinemaster.labels" . | nindent 4 }}
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: {{ .Values.pvc.backendClaim0.storageRequest | quote }}

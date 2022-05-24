@@ -1,0 +1,162 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "cinemaster.fullname" . }}-backend
+  labels:
+    io.kompose.service: backend
+  {{- include "cinemaster.labels" . | nindent 4 }}
+  annotations:
+    kompose.cmd: C:\Users\AloiAl\Desktop\cinemaster\kompose.exe convert
+    kompose.version: 1.26.0 (40646f47)
+spec:
+  replicas: {{ .Values.backend.replicas }}
+  selector:
+    matchLabels:
+      io.kompose.service: backend
+    {{- include "cinemaster.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        io.kompose.service: backend
+      {{- include "cinemaster.selectorLabels" . | nindent 8 }}
+      annotations:
+        kompose.cmd: C:\Users\AloiAl\Desktop\cinemaster\kompose.exe convert
+        kompose.version: 1.26.0 (40646f47)
+    spec:
+      containers:
+      - args:
+        - ./mvnw
+        - spring-boot:run
+        - -Dspring-boot.run.profiles=mysql
+        - -Dspring-boot.run.jvmArguments=-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:8000
+        env:
+        - name: SPRING_DATASOURCE_URL
+          value: jdbc:mysql://{{ include "cinemaster.fullname" . }}-server/cinemaster
+        - name: SERVER_PORT
+          value: "8080"
+        - name: KUBERNETES_CLUSTER_DOMAIN
+          value: {{ .Values.kubernetesClusterDomain }}
+        image: {{ .Values.backend.backend.image.repository }}:{{ .Values.backend.backend.image.tag
+          | default .Chart.AppVersion }}
+        name: backend
+        ports:
+        - containerPort: 8080
+        resources: {}
+        volumeMounts:
+        - mountPath: /app
+          name: backend-claim0
+      restartPolicy: Always
+      volumes:
+      - name: backend-claim0
+        persistentVolumeClaim:
+          claimName: {{ include "cinemaster.fullname" . }}-backend-claim0
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "cinemaster.fullname" . }}-frontend
+  labels:
+    io.kompose.service: frontend
+  {{- include "cinemaster.labels" . | nindent 4 }}
+  annotations:
+    kompose.cmd: C:\Users\AloiAl\Desktop\cinemaster\kompose.exe convert
+    kompose.version: 1.26.0 (40646f47)
+spec:
+  replicas: {{ .Values.frontend.replicas }}
+  selector:
+    matchLabels:
+      io.kompose.service: frontend
+    {{- include "cinemaster.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        io.kompose.service: frontend
+      {{- include "cinemaster.selectorLabels" . | nindent 8 }}
+      annotations:
+        kompose.cmd: C:\Users\AloiAl\Desktop\cinemaster\kompose.exe convert
+        kompose.version: 1.26.0 (40646f47)
+    spec:
+      containers:
+      - args:
+        - sh
+        - -c
+        - npm start
+        env:
+        - name: KUBERNETES_CLUSTER_DOMAIN
+          value: {{ .Values.kubernetesClusterDomain }}
+        image: {{ .Values.frontend.frontend.image.repository }}:{{ .Values.frontend.frontend.image.tag
+          | default .Chart.AppVersion }}
+        name: frontend
+        ports:
+        - containerPort: 4200
+        resources: {}
+        volumeMounts:
+        - mountPath: /app
+          name: frontend-claim0
+        - mountPath: /node_modules
+          name: frontend-claim1
+      restartPolicy: Always
+      volumes:
+      - name: frontend-claim0
+        persistentVolumeClaim:
+          claimName: {{ include "cinemaster.fullname" . }}-frontend-claim0
+      - name: frontend-claim1
+        persistentVolumeClaim:
+          claimName: {{ include "cinemaster.fullname" . }}-frontend-claim1
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "cinemaster.fullname" . }}-server
+  labels:
+    io.kompose.service: mysqlserver
+  {{- include "cinemaster.labels" . | nindent 4 }}
+  annotations:
+    kompose.cmd: C:\Users\AloiAl\Desktop\cinemaster\kompose.exe convert
+    kompose.version: 1.26.0 (40646f47)
+spec:
+  replicas: {{ .Values.server.replicas }}
+  selector:
+    matchLabels:
+      io.kompose.service: mysqlserver
+    {{- include "cinemaster.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        io.kompose.service: mysqlserver
+      {{- include "cinemaster.selectorLabels" . | nindent 8 }}
+      annotations:
+        kompose.cmd: C:\Users\AloiAl\Desktop\cinemaster\kompose.exe convert
+        kompose.version: 1.26.0 (40646f47)
+    spec:
+      containers:
+      - env:
+        - name: MYSQL_DATABASE
+          value: cinemaster
+        - name: MYSQL_PASSWORD
+          value: cinemaster
+        - name: MYSQL_ROOT_PASSWORD
+          value: cinemaster
+        - name: MYSQL_USER
+          value: cinemaster
+        - name: KUBERNETES_CLUSTER_DOMAIN
+          value: {{ .Values.kubernetesClusterDomain }}
+        image: {{ .Values.server.mysqlserver.image.repository }}:{{ .Values.server.mysqlserver.image.tag
+          | default .Chart.AppVersion }}
+        name: mysqlserver
+        ports:
+        - containerPort: 3306
+        resources: {}
+        volumeMounts:
+        - mountPath: /var/lib/mysql
+          name: mysql-data
+        - mountPath: /etc/mysql/conf.d
+          name: mysql-config
+      restartPolicy: Always
+      volumes:
+      - name: mysql-data
+        persistentVolumeClaim:
+          claimName: {{ include "cinemaster.fullname" . }}-data
+      - name: mysql-config
+        persistentVolumeClaim:
+          claimName: {{ include "cinemaster.fullname" . }}-config

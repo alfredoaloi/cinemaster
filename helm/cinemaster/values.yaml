@@ -1,0 +1,45 @@
+backend:
+  backend:
+    image:
+      repository: alfral/cinemaster_backend
+      tag: latest
+  ports:
+  - name: "8080"
+    port: 8080
+    targetPort: 8080
+  replicas: 1
+  type: LoadBalancer
+frontend:
+  frontend:
+    image:
+      repository: alfral/cinemaster_frontend
+      tag: latest
+  ports:
+  - name: "4200"
+    port: 4200
+    targetPort: 4200
+  replicas: 1
+  type: LoadBalancer
+kubernetesClusterDomain: cluster.local
+pvc:
+  backendClaim0:
+    storageRequest: 100Mi
+  config:
+    storageRequest: 100Mi
+  data:
+    storageRequest: 100Mi
+  frontendClaim0:
+    storageRequest: 100Mi
+  frontendClaim1:
+    storageRequest: 100Mi
+server:
+  mysqlserver:
+    image:
+      repository: alfral/mysql
+      tag: latest
+  ports:
+  - name: "3306"
+    port: 3306
+    targetPort: 3306
+  replicas: 1
+  type: LoadBalancer
