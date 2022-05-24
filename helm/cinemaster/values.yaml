@@ -21,18 +21,7 @@ frontend:
   replicas: 1
   type: LoadBalancer
 kubernetesClusterDomain: cluster.local
-pvc:
-  backendClaim0:
-    storageRequest: 100Mi
-  config:
-    storageRequest: 100Mi
-  data:
-    storageRequest: 100Mi
-  frontendClaim0:
-    storageRequest: 100Mi
-  frontendClaim1:
-    storageRequest: 100Mi
-server:
+mysqlserver:
   mysqlserver:
     image:
       repository: alfral/mysql
@@ -43,3 +32,14 @@ server:
     targetPort: 3306
   replicas: 1
   type: LoadBalancer
+pvc:
+  backendClaim0:
+    storageRequest: 100Mi
+  frontendClaim0:
+    storageRequest: 100Mi
+  frontendClaim1:
+    storageRequest: 100Mi
+  mysqlConfig:
+    storageRequest: 100Mi
+  mysqlData:
+    storageRequest: 100Mi

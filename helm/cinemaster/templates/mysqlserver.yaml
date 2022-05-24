@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "cinemaster.fullname" . }}-server
+  name: {{ include "cinemaster.fullname" . }}-mysqlserver
   labels:
     io.kompose.service: mysqlserver
   {{- include "cinemaster.labels" . | nindent 4 }}
@@ -9,9 +9,9 @@ metadata:
     kompose.cmd: C:\Users\AloiAl\Desktop\cinemaster\kompose.exe convert
     kompose.version: 1.26.0 (40646f47)
 spec:
-  type: {{ .Values.server.type }}
+  type: {{ .Values.mysqlserver.type }}
   selector:
     io.kompose.service: mysqlserver
   {{- include "cinemaster.selectorLabels" . | nindent 4 }}
   ports:
-	{{- .Values.server.ports | toYaml | nindent 2 -}}
+	{{- .Values.mysqlserver.ports | toYaml | nindent 2 -}}

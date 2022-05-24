@@ -31,7 +31,7 @@ spec:
         - -Dspring-boot.run.jvmArguments=-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:8000
         env:
         - name: SPRING_DATASOURCE_URL
-          value: jdbc:mysql://{{ include "cinemaster.fullname" . }}-server/cinemaster
+          value: jdbc:mysql://{{ include "cinemaster.fullname" . }}-mysqlserver/cinemaster
         - name: SERVER_PORT
           value: "8080"
         - name: KUBERNETES_CLUSTER_DOMAIN
@@ -107,7 +107,7 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "cinemaster.fullname" . }}-server
+  name: {{ include "cinemaster.fullname" . }}-mysqlserver
   labels:
     io.kompose.service: mysqlserver
   {{- include "cinemaster.labels" . | nindent 4 }}
@@ -115,7 +115,7 @@ metadata:
     kompose.cmd: C:\Users\AloiAl\Desktop\cinemaster\kompose.exe convert
     kompose.version: 1.26.0 (40646f47)
 spec:
-  replicas: {{ .Values.server.replicas }}
+  replicas: {{ .Values.mysqlserver.replicas }}
   selector:
     matchLabels:
       io.kompose.service: mysqlserver
@@ -141,7 +141,7 @@ spec:
           value: cinemaster
         - name: KUBERNETES_CLUSTER_DOMAIN
           value: {{ .Values.kubernetesClusterDomain }}
-        image: {{ .Values.server.mysqlserver.image.repository }}:{{ .Values.server.mysqlserver.image.tag
+        image: {{ .Values.mysqlserver.mysqlserver.image.repository }}:{{ .Values.mysqlserver.mysqlserver.image.tag
           | default .Chart.AppVersion }}
         name: mysqlserver
         ports:
@@ -156,7 +156,7 @@ spec:
       volumes:
       - name: mysql-data
         persistentVolumeClaim:
-          claimName: {{ include "cinemaster.fullname" . }}-data
+          claimName: {{ include "cinemaster.fullname" . }}-mysql-data
       - name: mysql-config
         persistentVolumeClaim:
-          claimName: {{ include "cinemaster.fullname" . }}-config
+          claimName: {{ include "cinemaster.fullname" . }}-mysql-config

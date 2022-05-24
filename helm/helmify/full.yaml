@@ -291,3 +291,38 @@ spec:
     io.kompose.service: mysqlserver
 status:
   loadBalancer: {}
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: cinemaster
+  annotations:
+    konghq.com/override: cinemaster-customization
+spec:
+  ingressClassName: kong
+  rules:
+  - host: localhost
+    http:
+      paths:
+      - path: /
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: frontend
+            port:
+              number: 4200
+      - path: /backend
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: backend
+            port:
+              number: 8080
+---
+apiVersion: configuration.konghq.com/v1
+kind: KongIngress
+metadata:
+  name: cinemaster-customization
+route:
+  strip_path: true
+  preserve_host: true

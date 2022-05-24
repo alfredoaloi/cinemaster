@@ -1,0 +1,28 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ include "cinemaster.fullname" . }}-cinemaster
+  labels:
+  {{- include "cinemaster.labels" . | nindent 4 }}
+  annotations:
+    konghq.com/override: {{ include "cinemaster.fullname" . }}-cinemaster-customization
+spec:
+  ingressClassName: kong
+  rules:
+  - host: localhost
+    http:
+      paths:
+      - backend:
+          service:
+            name: '{{ include "cinemaster.fullname" . }}-frontend'
+            port:
+              number: 4200
+        path: /
+        pathType: ImplementationSpecific
+      - backend:
+          service:
+            name: '{{ include "cinemaster.fullname" . }}-backend'
+            port:
+              number: 8080
+        path: /backend
+        pathType: ImplementationSpecific

@@ -1,0 +1,9 @@
+apiVersion: configuration.konghq.com/v1
+kind: KongIngress
+metadata:
+  name: {{ include "cinemaster.fullname" . }}-cinemaster-customization
+  labels:
+  {{- include "cinemaster.labels" . | nindent 4 }}
+route:
+  preserve_host: true
+  strip_path: true
