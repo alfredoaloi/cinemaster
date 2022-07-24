@@ -1,5 +1,0 @@
-# in deployment.yaml, deployment-backend
-        - name: SPRING_DATASOURCE_URL
-          value: jdbc:mysql://{{ include "cinemaster.fullname" . }}-server/cinemaster
-
-# cambia, in deployment.yaml, i service da ClusterIP in LoadBalancer
